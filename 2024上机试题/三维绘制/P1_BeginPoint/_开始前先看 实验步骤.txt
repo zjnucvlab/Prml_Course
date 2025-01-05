@@ -1,0 +1,40 @@
+注意：实现代码后，务必删除TODO和提示注释，如果模块中如果还保留有TODO会影响得分
+
+0. 通过纯文本编辑，手工新建一个off文件，如四面体tet.off。
+	然后使用MeshLab打开这个off文件进行可视化，检查几何体的完整度。
+
+
+1. 完成off_io.py模块的文件读写功能。
+	实现read_off_file函数： 输入off文件路径，从中读取数据，并保存到AssetData数据类中。
+	实现write_off_file函数： 输入off文件路径、AssetData数据类，将AssetData数据类中的数据输出到off文件中，并使用MeshLab可视化检查。
+	双向确认，保证读取和输入数据的一致性。
+	*参考资料可自行检索：open函数；文件的read，write等函数；str的split，lstrip，rstrip，strip等函数。
+
+
+2. 为off_io.py模块，添加命令行参数解析对象ArgumentParser，使得可以从命令行中输入参数，操作off文件读写。
+	需要包含的参数如下：
+	--src，意为源文件source，输入的off文件名。
+	--dst，意为目标文件destination，输出的off文件名。
+
+	最终在命令行中执行以下命令，可以实现从tet.off文件读取数据，写入一个新的tet1.off文件中：
+	python off_io.py --src tet.off --dst tet1.off
+
+	*参考资料可自行检索：argparse模块，ArgumentParser类，parse_args函数等。
+
+
+3. 实现geom_impl.py模块中所有以 _impl结尾 的几何体数据计算函数。
+	所有函数的大致功能是，计算几何体的顶点列表vertices，面列表faces，面颜色列表colors，并存入一个AssetData数据类中，并由函数返回。
+
+	*注意：custom1和custom2这两个几何体，请根据个人喜好，避免雷同，自行决定。
+
+
+4. 使用ArgumentParser，实现draw.py模块的命令行接口，要求至少实现以下四个参数：
+	--geom [geom_opt], 指定一个几何体名字，geom_opt是draw.py中DrawImpl字典的键(keys)。
+	--dst [file_path]，指定off文件名输出路径为[file_path]。
+	--all，绘制所有几何体数据。
+	--output [output_dir]，指定一个输出所有几何体off文件的文件夹名字，如果不存在需要新建，如果命令没有指定--output应有默认值。
+
+	最终在命令行可以实现如下功能：
+	python draw.py --all，绘制所有几何体，输出到默认的输出文件夹。
+	python draw.py --all --output new_output_dir，绘制所有几何体，输出到名为new_output_dir的文件夹。
+	python draw.py --geom prism5 --dst prism5.off, 绘制五棱柱，文件保存为prism5.off。其余类似。
